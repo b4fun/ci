@@ -10,5 +10,5 @@ import (
 func TestGet(t *testing.T) {
 	assert.IsType(t, &githubActionsT{}, Get(ci.GithubActions))
 	assert.IsType(t, &azurePipelineT{}, Get(ci.AzurePipelines))
-	assert.IsType(t, &Mute{}, Get(ci.Custom))
+	assert.IsType(t, &genericT{}, Get(ci.Custom))
 }

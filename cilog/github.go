@@ -36,6 +36,7 @@ func GitHubActions(opts ...GitHubOpts) Logger {
 func (gat *githubActionsT) Capabilities() map[Capability]struct{} {
 	return map[Capability]struct{}{
 		CapabilityLog:        {},
+		CapabilityColor:      {},
 		CapabilityDebugLog:   {},
 		CapabilityNoticeLog:  {},
 		CapabilityWarningLog: {},

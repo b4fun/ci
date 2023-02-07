@@ -15,6 +15,7 @@ func TestGitHubActions(t *testing.T) {
 
 	caps := gat.Capabilities()
 	assert.Contains(t, caps, CapabilityLog)
+	assert.Contains(t, caps, CapabilityColor)
 	assert.Contains(t, caps, CapabilityDebugLog)
 	assert.Contains(t, caps, CapabilityNoticeLog)
 	assert.Contains(t, caps, CapabilityWarningLog)

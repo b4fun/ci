@@ -21,6 +21,12 @@ const (
 	CapabilityGroupLog
 )
 
+// Can tells if the logger has specified logging capability.
+func Can(l Logger, capability Capability) bool {
+	_, exists := l.Capabilities()[capability]
+	return exists
+}
+
 // GroupLogParams specifies the parameter for GroupLog.
 type GroupLogParams struct {
 	// Name - name of the group
@@ -52,7 +58,7 @@ type Logger interface {
 }
 
 // Get returns a logger based on CI environment.
-// If no supported logger defined, a Mute logger will be returned.
+// If no supported logger defined, a generic logger will be returned.
 func Get(name ci.Name) Logger {
 	switch name {
 	case ci.GithubActions:
@@ -60,6 +66,6 @@ func Get(name ci.Name) Logger {
 	case ci.AzurePipelines:
 		return AzurePipeline()
 	default:
-		return &Mute{}
+		return generic()
 	}
 }
