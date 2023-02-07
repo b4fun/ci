@@ -1,5 +1,7 @@
 package cilog
 
+import "github.com/b4fun/ci"
+
 type Capability int
 
 const (
@@ -47,4 +49,17 @@ type Logger interface {
 
 	// GroupLog - emitting logs as a group (CapabilityGroupLog)
 	GroupLog(params GroupLogParams) (groupLogger Logger, endGroup func())
+}
+
+// Get returns a logger based on CI environment.
+// If no supported logger defined, a Mute logger will be returned.
+func Get(name ci.Name) Logger {
+	switch name {
+	case ci.GithubActions:
+		return GitHubActions()
+	case ci.AzurePipelines:
+		return AzurePipeline()
+	default:
+		return &Mute{}
+	}
 }
