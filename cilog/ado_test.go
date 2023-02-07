@@ -56,3 +56,33 @@ foobar
 		output,
 	)
 }
+
+func TestAzurePipeline_useLogIssue(t *testing.T) {
+	b := new(bytes.Buffer)
+	apt := AzurePipeline(
+		applyOptsFunc[azurePipelineT](func(apt *azurePipelineT) {
+			apt.out = b
+		}),
+		AzurePipelineUseLogIssue(true),
+	)
+
+	apt.Log("foobar")
+	apt.DebugLog("debug foobar")
+	apt.WarningLog("warning foobar")
+	apt.ErrorLog("error foobar")
+
+	output := b.String()
+	if ci.Detect() != ci.AzurePipelines {
+		t.Log(output)
+	}
+
+	assert.Equal(
+		t,
+		`foobar
+##[debug]debug foobar
+##vso[task.logissue type=warning]warning foobar
+##vso[task.logissue type=error]error foobar
+`,
+		output,
+	)
+}
