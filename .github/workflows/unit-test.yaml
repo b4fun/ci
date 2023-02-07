@@ -1,0 +1,30 @@
+name: "Unit Test"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  go-test:
+    strategy:
+      matrix:
+        go-version: [">=1.19"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Unit Test
+      run: |
+        go test -race -v ./...
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.51
