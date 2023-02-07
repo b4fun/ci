@@ -8,7 +8,7 @@ type applyOptsFunc[T any] func(*T)
 
 var _ applyOpts[any] = (applyOptsFunc[any])(nil)
 
-// nolint: unused - false alarm
+// nolint: unused
 func (f applyOptsFunc[T]) apply(t *T) {
 	f(t)
 }
