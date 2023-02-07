@@ -10,7 +10,7 @@ import (
 
 func TestAzurePipeline(t *testing.T) {
 	b := new(bytes.Buffer)
-	apt := AzurePipeline(azurePipelineOptsFunc(func(apt *azurePipelineT) {
+	apt := AzurePipeline(applyOptsFunc[azurePipelineT](func(apt *azurePipelineT) {
 		apt.out = b
 	}))
 

@@ -7,17 +7,7 @@ import (
 )
 
 // AzurePipelineOpts configures AzurePipeline logger.
-// refs:
-// - https://learn.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands
-type AzurePipelineOpts interface {
-	apply(*azurePipelineT)
-}
-
-type azurePipelineOptsFunc func(apt *azurePipelineT)
-
-func (f azurePipelineOptsFunc) apply(apt *azurePipelineT) {
-	f(apt)
-}
+type AzurePipelineOpts = applyOpts[azurePipelineT]
 
 // azurePipelineT implements Logger for AzurePipelines CI.
 type azurePipelineT struct {
@@ -29,6 +19,9 @@ type azurePipelineT struct {
 var _ Logger = (*azurePipelineT)(nil)
 
 // AzurePipeline creates an AzurePipeline logger.
+//
+// refs:
+// - https://learn.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands
 func AzurePipeline(opts ...AzurePipelineOpts) Logger {
 	rv := &azurePipelineT{
 		out: os.Stdout,
