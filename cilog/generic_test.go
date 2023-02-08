@@ -28,3 +28,30 @@ func TestGeneric(t *testing.T) {
 		output,
 	)
 }
+
+func TestGeneric_UnsupportedCaps(t *testing.T) {
+	b := new(bytes.Buffer)
+	gt := generic()
+	gt.SetOutput(b)
+
+	Debug(gt, "debug")
+	Notice(gt, "notice")
+	Warning(gt, "warning")
+	Error(gt, "error")
+	g, finishedGroup := Group(gt, GroupLogParams{Name: "group"})
+	g.Log("group log")
+	finishedGroup()
+
+	output := b.String()
+	t.Log(output)
+	assert.Equal(
+		t,
+		`debug
+notice
+warning
+error
+group log
+`,
+		output,
+	)
+}

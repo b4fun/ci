@@ -42,6 +42,54 @@ func Group(l Logger, params GroupLogParams) (Logger, func()) {
 	return l.GroupLog(params)
 }
 
+// Debug - emitting debug log.
+// If the given logger doesn't support CapabilityDebugLog, fallbacks to Log.
+func Debug(l Logger, s string) {
+	p := l.DebugLog
+
+	if !Can(l, CapabilityDebugLog) {
+		p = l.Log
+	}
+
+	p(s)
+}
+
+// Notice - emitting notice log.
+// If the given logger doesn't support CapabilityNoticeLog, fallbacks to Log.
+func Notice(l Logger, s string) {
+	p := l.DebugLog
+
+	if !Can(l, CapabilityNoticeLog) {
+		p = l.Log
+	}
+
+	p(s)
+}
+
+// Warning - emitting warning log.
+// If the given logger doesn't support CapabilityWarningLog, fallbacks to Log.
+func Warning(l Logger, s string) {
+	p := l.WarningLog
+
+	if !Can(l, CapabilityWarningLog) {
+		p = l.Log
+	}
+
+	p(s)
+}
+
+// Error - emitting error log.
+// If the given logger doesn't support CapabilityErrorLog, fallbacks to Log.
+func Error(l Logger, s string) {
+	p := l.ErrorLog
+
+	if !Can(l, CapabilityErrorLog) {
+		p = l.Log
+	}
+
+	p(s)
+}
+
 // GroupLogParams specifies the parameter for GroupLog.
 type GroupLogParams struct {
 	// Name - name of the group
