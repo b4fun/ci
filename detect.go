@@ -53,6 +53,12 @@ func Detect(opts ...DetectOpts) Name {
 		return o.getEnv(k) != ""
 	}
 
+	// NOTE: we expect to allow overriding CI name via CI_NAME env
+	//       and bypass all remaining checks. Therefore, keep this check on the top.
+	if v := o.getEnv("CI_NAME"); v != "" {
+		// codeship and a few others
+		return Name(v)
+	}
 	if notEmpty("GERRIT_PROJECT") {
 		return Gerrit
 	}
@@ -166,10 +172,6 @@ func Detect(opts ...DetectOpts) Name {
 	}
 	if notEmpty("TEAMCITY_VERSION") {
 		return TeamCity
-	}
-	if v := o.getEnv("CI_NAME"); v != "" {
-		// codeship and a few others
-		return Name(v)
 	}
 	if v := o.getEnv("NODE"); v != "" && herokuNodeRegex.MatchString(v) {
 		return Heroku

@@ -126,6 +126,10 @@ func TestDetect(t *testing.T) {
 			expected: NowBitbucket,
 		},
 		{
+			getEnv:   setEnv("BITBUCKET_BUILD_NUMBER", "1"),
+			expected: BitbucketPipelines,
+		},
+		{
 			getEnv:   setEnv("NOW_BUILDER", "1"),
 			expected: Now,
 		},
@@ -218,4 +222,19 @@ func TestDetect(t *testing.T) {
 			assert.Equal(t, c.expected, v)
 		})
 	}
+}
+
+func TestDetect_Override(t *testing.T) {
+	name := Detect(DetectFromEnv(func(s string) string {
+		if s == "GERRIT_PROJECT" {
+			return "1"
+		}
+		if s == "CI_NAME" {
+			return "foobar"
+		}
+
+		return ""
+	}))
+
+	assert.Equal(t, Name("foobar"), name)
 }
