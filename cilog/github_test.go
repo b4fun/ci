@@ -9,9 +9,8 @@ import (
 
 func TestGitHubActions(t *testing.T) {
 	b := new(bytes.Buffer)
-	gat := GitHubActions(applyOptsFunc[githubActionsT](func(gat *githubActionsT) {
-		gat.out = b
-	}))
+	gat := GitHubActions()
+	gat.SetOutput(b)
 
 	caps := gat.Capabilities()
 	assert.Contains(t, caps, CapabilityLog)

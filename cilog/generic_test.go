@@ -9,9 +9,8 @@ import (
 
 func TestGeneric(t *testing.T) {
 	b := new(bytes.Buffer)
-	gt := generic(applyOptsFunc[genericT](func(gt *genericT) {
-		gt.out = b
-	}))
+	gt := generic()
+	gt.SetOutput(b)
 
 	caps := gt.Capabilities()
 	assert.Contains(t, caps, CapabilityLog)

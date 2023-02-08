@@ -1,10 +1,14 @@
 package cilog
 
+import "io"
+
 // Mute implements all Logger methods by muting output.
 type Mute struct {
 }
 
 var _ Logger = (*Mute)(nil)
+
+func (m *Mute) SetOutput(o io.Writer) {}
 
 func (m *Mute) Capabilities() map[Capability]struct{} {
 	return map[Capability]struct{}{}

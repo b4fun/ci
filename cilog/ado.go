@@ -45,6 +45,10 @@ func AzurePipeline(opts ...AzurePipelineOpts) Logger {
 	return rv
 }
 
+func (apt *azurePipelineT) SetOutput(out io.Writer) {
+	apt.out = out
+}
+
 func (apt *azurePipelineT) Capabilities() map[Capability]struct{} {
 	return map[Capability]struct{}{
 		CapabilityLog:        {},

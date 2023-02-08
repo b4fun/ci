@@ -1,6 +1,10 @@
 package cilog
 
-import "github.com/b4fun/ci"
+import (
+	"io"
+
+	"github.com/b4fun/ci"
+)
 
 type Capability int
 
@@ -35,6 +39,10 @@ type GroupLogParams struct {
 
 // Logger provides improved CI logging output.
 type Logger interface {
+	// SetOutput sets the output of the logger.
+	// This is useful unit testing usage.
+	SetOutput(io.Writer)
+
 	// Capabilities returns the capabilities of the logger.
 	Capabilities() map[Capability]struct{}
 

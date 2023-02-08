@@ -26,6 +26,10 @@ func generic(opts ...applyOpts[genericT]) Logger {
 
 var _ Logger = (*genericT)(nil)
 
+func (gt *genericT) SetOutput(out io.Writer) {
+	gt.out = out
+}
+
 func (gt *genericT) Capabilities() map[Capability]struct{} {
 	return map[Capability]struct{}{
 		CapabilityLog: {},

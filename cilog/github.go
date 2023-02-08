@@ -33,6 +33,10 @@ func GitHubActions(opts ...GitHubOpts) Logger {
 	return rv
 }
 
+func (gat *githubActionsT) SetOutput(out io.Writer) {
+	gat.out = out
+}
+
 func (gat *githubActionsT) Capabilities() map[Capability]struct{} {
 	return map[Capability]struct{}{
 		CapabilityLog:        {},

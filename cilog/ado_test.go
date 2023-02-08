@@ -10,9 +10,8 @@ import (
 
 func TestAzurePipeline(t *testing.T) {
 	b := new(bytes.Buffer)
-	apt := AzurePipeline(applyOptsFunc[azurePipelineT](func(apt *azurePipelineT) {
-		apt.out = b
-	}))
+	apt := AzurePipeline()
+	apt.SetOutput(b)
 
 	caps := apt.Capabilities()
 	assert.Contains(t, caps, CapabilityLog)
