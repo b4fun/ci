@@ -31,6 +31,17 @@ func Can(l Logger, capability Capability) bool {
 	return exists
 }
 
+// Group starts a group logger.
+// If the given logger doesn't support group logging,
+// the original logger will be returned and a noop finish function will be returned.
+func Group(l Logger, params GroupLogParams) (Logger, func()) {
+	if !Can(l, CapabilityGroupLog) {
+		return l, func() {}
+	}
+
+	return l.GroupLog(params)
+}
+
 // GroupLogParams specifies the parameter for GroupLog.
 type GroupLogParams struct {
 	// Name - name of the group
